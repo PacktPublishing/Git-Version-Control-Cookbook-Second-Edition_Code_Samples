@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Clean the tree for unwanted dirs and files
+# $1 Files and dirs to keep
+clean-tree () {
+	# Remove everything but  from the git index/staging area
+	for f in $(git ls-files | grep -E -v "$1" | grep -o -E "^[^/\"]+" | sort -u); do
+	  git rm -rq --cached --ignore-unmatch $f
+	  #echo -en "\nRemoving $f\n"
+	done
+}
+
+clean-tree $1
+
